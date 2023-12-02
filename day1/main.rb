@@ -46,6 +46,8 @@ def part_1
     vals << first_digit.to_i * 10 + last_digit.to_i
   end
 
+  binding.break
+
   puts "Part 1: #{vals.sum}"
 end
 
