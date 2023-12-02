@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-require 'byebug'
-
 CUBES = {
   'red' => 12,
   'green'=> 13,
   'blue' => 14
-}
+}.freeze
 
-def part_1
+def part1
   ids = []
 
   File.readlines('data.txt').each do |line|
@@ -38,11 +36,10 @@ def part_1
   puts "Part 1: #{ids.sum}"
 end
 
-def part_2
+def part2
   powers = []
 
   File.readlines('data.txt').each do |line|
-
     cubes = {}
 
     line
@@ -54,10 +51,10 @@ def part_2
       .each do |show|
         show.split(',').each do |shown|
           val, color = shown.split(' ')
-          
-          if cubes[color].nil? || cubes[color] < val.to_i
-            cubes[color] = val.to_i
-          end
+
+          next if cubes[color] && cubes[color] >= val.to_i
+
+          cubes[color] = val.to_i
         end
       end
 
@@ -67,5 +64,5 @@ def part_2
   puts "Part 2: #{powers.sum}"
 end
 
-part_1
-part_2
+part1
+part2
