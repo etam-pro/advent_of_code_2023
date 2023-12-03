@@ -37,18 +37,16 @@ def find_num(engine, x, y)
   start = x
   last = x
 
-  while true
+  loop do
     break unless engine[y][start - 1] =~ /\d/
 
     start -= 1
-
   end
 
-  while true
+  loop do
     break unless engine[y][last + 1] =~ /\d/
 
     last += 1
-
   end
 
   [engine[y][start..last].join(''), start, last]
