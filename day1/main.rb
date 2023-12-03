@@ -23,17 +23,15 @@ LETTERS_MAP = {
   'twenty' => '20'
 }
 
-
 def detect_first_digit(str, letters_map = {})
   str.split('').each_with_index do |char, i|
     return char if char.match?(/\d/)
 
     letters_map.each do |word, digit|
-      return digit.split('').last if str[i..i+word.length-1] == word
+      return digit.split('').last if str[i..i + word.length - 1] == word
     end
   end
 end
-
 
 def part_1
   vals = []

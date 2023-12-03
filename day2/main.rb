@@ -2,7 +2,7 @@
 
 CUBES = {
   'red' => 12,
-  'green'=> 13,
+  'green' => 13,
   'blue' => 14
 }.freeze
 
@@ -13,7 +13,7 @@ def part1
     valid = true
 
     id = line.chomp.split(':').first.split(' ').last.to_i
-    
+
     line
       .chomp
       .split(':')
@@ -21,19 +21,19 @@ def part1
       .split(';')
       .map(&:strip)
       .each do |show|
-        show.split(',').each do |cubes|
-          val, color = cubes.split(' ')
-          if CUBES[color] < val.to_i
-            valid = false
-            break
-          end
+      show.split(',').each do |cubes|
+        val, color = cubes.split(' ')
+        if CUBES[color] < val.to_i
+          valid = false
+          break
         end
       end
+    end
 
     ids << id if valid
   end
 
-  puts "Part 1: #{ids.sum}"
+  puts("Part 1: #{ids.sum}")
 end
 
 def part2
@@ -61,7 +61,7 @@ def part2
     powers << cubes.values.reduce(:*)
   end
 
-  puts "Part 2: #{powers.sum}"
+  puts("Part 2: #{powers.sum}")
 end
 
 part1
