@@ -6,8 +6,8 @@ def get_card_id(line)
   line.split(':').first.split(' ').last.to_i
 end
 
-def get_wins(_line)
-  win_nums, owned_nums = nums.split('|').map(&:strip)
+def get_wins(line)
+  win_nums, owned_nums = line.split(':').last.split('|').map(&:strip)
 
   win_nums = win_nums.split(' ').map(&:to_i)
   owned_nums = owned_nums.split(' ').map(&:to_i)
@@ -20,7 +20,7 @@ def part1
 
   File.readlines('data.txt').map(&:chomp).each do |line|
     wins = get_wins(line)
-    point = wins > 0 ? 2**(wins - 1) : 0
+    point = (2**(wins - 1)).floor
     points << point
   end
 
