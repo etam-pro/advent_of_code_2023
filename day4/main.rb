@@ -41,7 +41,7 @@ def part2
 
     (1..wins).each do |i|
       cards[card_id + i] ||= 0
-      cards[card_id + i] += 1 * cards[card_id]
+      cards[card_id + i] += cards[card_id]
     end
   end
 
