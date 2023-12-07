@@ -88,12 +88,13 @@ def part2
 
   File.readlines('data.txt').each do |line|
     if line =~ /seeds:/
-      seed_nums, seed_range_sizes = line.split(':')
-                                        .last
-                                        .strip
-                                        .split(' ')
-                                        .map(&:to_i)
-                                        .partition.with_index { |_, i| i.even? }
+      seed_nums, seed_range_sizes = line
+        .split(':')
+        .last
+        .strip
+        .split(' ')
+        .map(&:to_i)
+        .partition.with_index { |_, i| i.even? }
 
       seed_nums.each_with_index do |seed_num, i|
         seeds << (seed_num..(seed_num + seed_range_sizes[i] - 1))
