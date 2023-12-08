@@ -74,5 +74,5 @@ def part2
   puts "Part 2: #{steps}"
 end
 
-# part1
+part1
 part2
