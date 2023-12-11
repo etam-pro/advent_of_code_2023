@@ -139,16 +139,6 @@ def detect_loop(start)
   false
 end
 
-def part1
-  ns = parse_map
-  start = find_start(ns)
-  is_loop = detect_loop(start)
-
-  raise 'Loop not detected' unless is_loop
-
-  puts "Part 1: #{ns.flatten.map(&:dist).max / 2}"
-end
-
 def print_map(nodes)
   map_str = nodes.map do |row|
     puts row.map(&:value).join('')
@@ -186,6 +176,16 @@ def print_enclosed(nodes)
   puts map_str
 end
 
+def part1
+  ns = parse_map
+  start = find_start(ns)
+  is_loop = detect_loop(start)
+
+  raise 'Loop not detected' unless is_loop
+
+  puts "Part 1: #{ns.flatten.map(&:dist).max / 2}"
+end
+
 def part2
   ns = parse_map
   start = find_start(ns)
@@ -215,5 +215,5 @@ def part2
   puts "Part 2: #{total}"
 end
 
-# part1
+part1
 part2
