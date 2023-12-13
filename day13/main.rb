@@ -188,20 +188,8 @@ end
 
 def part1
   total = []
-  patterns = []
 
-  cur = []
-  File.readlines('data.txt').each do |line|
-    if line == "\n"
-      patterns << cur
-      cur = []
-      next
-    end
-
-    cur << line.chomp
-  end
-
-  patterns << cur
+  patterns = parse_patterns('data.txt')
 
   patterns.each_with_index do |pattern, _x|
     ver_reflect = find_vertical_reflection(pattern)
@@ -216,20 +204,8 @@ end
 
 def part2
   total = []
-  patterns = []
 
-  cur = []
-  File.readlines('data.txt').each do |line|
-    if line == "\n"
-      patterns << cur
-      cur = []
-      next
-    end
-
-    cur << line.chomp
-  end
-
-  patterns << cur
+  patterns = parse_patterns('data.txt')
 
   patterns.each_with_index do |pattern, _x|
     ver_broken_reflect = find_broken_vertical_reflection(pattern)
