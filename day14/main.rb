@@ -112,5 +112,5 @@ def print_platform(plat)
   nil
 end
 
-# part1
+part1
 part2
