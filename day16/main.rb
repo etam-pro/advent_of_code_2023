@@ -155,8 +155,7 @@ def part1
   nodes = parse('day16/data.txt')
   start = nodes[0][0]
   trace(nodes, [[1, 0], start])
-  print_energized(nodes)
-  puts(nodes.flatten.count { |n| !n.energized.empty? })
+  puts "Part 1: #{nodes.flatten.count { |n| !n.energized.empty? }}"
 end
 
 def part2
@@ -170,8 +169,8 @@ def part2
     scores << nodes.flatten.count { |n| !n.energized.empty? }
   end
 
-  puts scores.max
+  puts "Part 2: #{scores.max}"
 end
 
-# part1
+part1
 part2
