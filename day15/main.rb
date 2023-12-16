@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'byebug'
+require 'debug'
 
 def parse(filename)
   File.read(filename).chomp.split(',')
@@ -23,7 +23,7 @@ def get_label(str, op)
 end
 
 def part1
-  inputs = parse('data.txt')
+  inputs = parse('day15/data.txt')
 
   vals = inputs.map do |str|
     hashie(str)
@@ -33,7 +33,7 @@ def part1
 end
 
 def part2
-  inputs = parse('data.txt')
+  inputs = parse('day15/data.txt')
 
   boxes = {}
 
