@@ -74,13 +74,7 @@ class Node
       ]
     end
 
-    if reflect?
-
-      new_x_dir = x_dir.abs == 1 ? 0 : y_dir * -1
-      new_y_dir = y_dir.abs == 1 ? 0 : x_dir * -1
-
-      new_dirs << reflect_dir(dir)
-    end
+    new_dirs << reflect_dir(dir) if reflect?
 
     new_dirs.each do |new_dir|
       next if dead_end?(new_dir, nodes)
