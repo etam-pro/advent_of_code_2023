@@ -30,13 +30,16 @@ class Graph
     right: [1, 0]
   }
 
-  def initialize(nodes)
+  def initialize(nodes, min_dir_in_a_row = 1, max_dir_in_a_row = 3)
     @nodes = nodes
     @min = Float::INFINITY
 
     @dist = {}
     @prev = {}
     @search = 0
+
+    @min_dir_in_a_row = min_dir_in_a_row
+    @max_dir_in_a_row = max_dir_in_a_row
   end
 
   def start
@@ -64,34 +67,41 @@ class Graph
     false
   end
 
-  def bfs
+  def calc
     start.prevs[[]] = 0
     queue = [[start, []]]
 
     until queue.empty?
-
       cur, prevs = queue.shift
-
-      puts "#{cur.xy}"
-
-      if cur == finish
-        if cur.prevs[prevs] < @min
-          @min = cur.prevs[prevs]
-          print  "#{@min} \r"
-        end
-
-        next
-      end
-
-      next if cur.prevs[prevs] && cur.prevs[prevs] >= @min
-
       dirs = if cur == start
                [DIRS[:down], DIRS[:right]]
              else
                prev_x, prev_y = prevs.last
                dir = [cur.x - prev_x, cur.y - prev_y]
-               possible_dirs(dir)
+
+               if can_turn?(cur, prevs, dir)
+                 possible_dirs(dir)
+               else
+                 [dir]
+               end
              end
+
+      puts "#{cur.xy}"
+
+      if cur == finish
+        if can_turn?(cur, prevs, dir)
+          if cur.prevs[prevs] < @min
+            @min = cur.prevs[prevs]
+            print  "#{@min} \r"
+          end
+
+        else
+          cur.prevs.delete(prevs)
+        end
+        next
+      end
+
+      next if cur.prevs[prevs] && cur.prevs[prevs] >= @min
 
       dirs
         .filter { |new_dir| !out_of_bounds?(cur, new_dir) }
@@ -102,7 +112,7 @@ class Graph
           next_node = @nodes[cur.y + y_dir][cur.x + x_dir]
 
           alt = next_node.value + cur.prevs[prevs]
-          next_prevs = prevs.last(2) + [cur.xy]
+          next_prevs = prevs.last(@max_dir_in_a_row - 1) + [cur.xy]
 
           next if next_node.prevs[next_prevs] && next_node.prevs[next_prevs] <= alt
 
@@ -157,28 +167,42 @@ class Graph
     count
   end
 
-  def can_move?(cur, prevs, dir, _ultra = false)
+  def can_move?(cur, prevs, dir)
     count = same_dirs_in_a_row(cur, prevs, dir)
 
-    count < 3
+    count < @max_dir_in_a_row
+  end
+
+  def can_turn?(cur, prevs, dir)
+    count = same_dirs_in_a_row(cur, prevs, dir)
+
+    count >= @min_dir_in_a_row
   end
 end
 
-def parse(filename)
+def parse(filename, min, max)
   nodes = []
 
   File.readlines(filename).map(&:chomp).each_with_index do |line, y|
     nodes << line.split('').map.with_index { |c, x| Node.new(c.to_i, x, y) }
   end
 
-  Graph.new(nodes)
+  Graph.new(nodes, min, max)
 end
 
 def part1
-  graph = parse('day17/sample.txt')
-  min = graph.bfs
+  graph = parse('day17/sample.txt', 1, 3)
+  min = graph.calc
+
+  puts min
+end
+
+def part2
+  graph = parse('day17/data.txt', 4, 10)
+  min = graph.calc
 
   puts min
 end
 
 part1
+part2
